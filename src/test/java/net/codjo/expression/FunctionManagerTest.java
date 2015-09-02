@@ -4,11 +4,15 @@
  * Copyright (c) 2001 AGF Asset Management.
  */
 package net.codjo.expression;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+
 import junit.framework.TestCase;
 import net.codjo.expression.help.FunctionHelp;
+
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 /**
  * Gère une liste de fonction
  */
@@ -71,8 +75,14 @@ public class FunctionManagerTest extends TestCase {
 
         List functionList = manager.getAllFunctionsHelp();
         assertEquals(9, functionList.size());
-        assertHelp((FunctionHelp)functionList.get(6), "utils.lastDay", 1,
-                   "Usage : utils.lastDay(chaîne)");
+        Collections.sort(functionList, new Comparator<FunctionHelp>() {
+
+            public int compare(FunctionHelp o1, FunctionHelp o2) {
+                return o1.getFunctionName().compareTo(o2.getFunctionName());
+            }
+        });
+        assertHelp((FunctionHelp) functionList.get(8), "utils.lastDay", 1,
+                "Usage : utils.lastDay(chaîne)");
     }
 
 
